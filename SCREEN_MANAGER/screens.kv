@@ -1,0 +1,51 @@
+#:kivy 1.8.0
+
+<ScreenOne>:
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.size
+        spacing: 20
+        padding: 20
+
+		Image:
+            source: 'solar.jpg'
+            allow_stretch: False
+            keep_ratio: False
+        Button:
+            text: "Button 1"
+			font_size: 14
+			size_hint: 0.10,0.10
+            on_release:
+                root.manager.current = "screen2"
+                # reset health_points
+                root.manager.ids.screen_two.health_points = 100
+
+<ScreenTwo>:        
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.size
+        spacing: 20
+        padding: 20
+
+		Image:
+            source: 'image_3.png'
+            allow_stretch: False
+            keep_ratio: False
+
+<Manager>:
+    id: screen_manager
+
+    screen_one: screen_one
+    screen_two: screen_two
+
+    ScreenOne:
+        id: screen_one
+        name: "screen1"
+        manager: screen_manager
+
+    ScreenTwo:
+        id: screen_two
+        name: "screen2"
+        manager: screen_manager
