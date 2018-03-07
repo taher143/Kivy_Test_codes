@@ -14,12 +14,21 @@ class MyApp(App):
 		super(MyApp,self).__init__(**kwargs)
 		Clock.schedule_interval(self.btn_callback,5)
 	
+	image_num = 0
+	
 	def btn_callback(self, *args):
 		# This callback changes the image source
-		if self.wimg.source == "wild-birds.jpg":
-			self.wimg.source = "image_3.png"
-		else:
-			self.wimg.source = "wild-birds.jpg"
+		print self.image_num
+		if self.image_num < 4:
+			self.wimg.source = str(self.image_num)+".jpg"
+			self.image_num = self.image_num + 1
+		elif self.image_num > 3:
+			self.image_num = 0
+			raise SystemExit, "job Done!!\r\nWe're Leaving......"
+		#if self.wimg.source == "wild-birds.jpg":
+		#	self.wimg.source = "image_3.png"
+		#else:
+		#	self.wimg.source = "wild-birds.jpg"
 			
 	def build(self):
         # Set up the layout:
