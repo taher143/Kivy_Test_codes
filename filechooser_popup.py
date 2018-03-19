@@ -17,12 +17,12 @@ Builder.load_string('''
 		BoxLayout:	
 			size_hint: 1,0.2
 			Button:
-				text: 'Yes'
+				text: 'OK'
 				on_release: root.dispatch('on_answer',filechooser.selection)
 				size_hint: 1,0.2
 			Button:
-				text: 'No'
-				on_release: root.dispatch('on_answer', 'no')
+				text: 'Cancel'
+				on_release: root.dispatch('on_answer', 'Cancel')
 				size_hint: 1,0.2
 ''')
 
@@ -35,14 +35,15 @@ class ConfirmPopup(BoxLayout):
 		super(ConfirmPopup,self).__init__(**kwargs)
 		
 	def on_answer(self, filename):
-		print "selected: %s" % filename[0]
-		print subprocess.call(['unzip',filename[0],'-d','/home/pi/nkonnect/3D_Printer/test_4/temp_zip'])
+		print "selected: %s" % filename
+		if filename != "Cancel" :
+                        print subprocess.call(['unzip',filename[0],'-d','/home/pi/nkonnect/3D_Printer/test_4/temp_zip'])
 
 class PopupTest(App):
 	def build(self):
 		content = ConfirmPopup()
 		content.bind(on_answer=self._on_answer)
-		self.popup = Popup(title="Answer Question",
+		self.popup = Popup(title="Select .zip file",
 							content=content,
 							size_hint=(None, None),
 							size=(480,400),
@@ -51,7 +52,6 @@ class PopupTest(App):
 		
 	def _on_answer(self, instance, answer):
 		print "USER ANSWER: " , repr(answer)
-		
 		self.popup.dismiss()
 		
 if __name__ == '__main__':
